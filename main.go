@@ -7,6 +7,8 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"net"
+	"net/http"
 	"os"
 	"runtime"
 	"strconv"
@@ -47,6 +49,7 @@ import (
 	policyv1 "open-cluster-management.io/governance-policy-propagator/api/v1"
 	policyv1beta1 "open-cluster-management.io/governance-policy-propagator/api/v1beta1"
 	automationctrl "open-cluster-management.io/governance-policy-propagator/controllers/automation"
+	dryrun "open-cluster-management.io/governance-policy-propagator/controllers/dryrun"
 	encryptionkeysctrl "open-cluster-management.io/governance-policy-propagator/controllers/encryptionkeys"
 	metricsctrl "open-cluster-management.io/governance-policy-propagator/controllers/policymetrics"
 	policysetctrl "open-cluster-management.io/governance-policy-propagator/controllers/policyset"
@@ -497,6 +500,25 @@ func main() {
 	go func() {
 		if err := mgr.Start(controllerCtx); err != nil {
 			log.Error(err, "Problem running manager")
+			os.Exit(1)
+		}
+
+		wg.Done()
+	}()
+
+	// Dryrun server
+	mux := http.NewServeMux()
+	mux.HandleFunc("/dryrun", dryrun.PostHandler)
+
+	dryrunServer := &http.Server{
+		Addr:        ":8090",
+		BaseContext: func(_ net.Listener) context.Context { return controllerCtx },
+		Handler:     mux,
+	}
+
+	go func() {
+		if err := dryrunServer.ListenAndServe(); err != nil {
+			log.Error(err, "Problem running dryrun server")
 			os.Exit(1)
 		}
 

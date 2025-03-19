@@ -144,7 +144,7 @@ endif
 .PHONY: kind-create-cluster
 kind-create-cluster:
 	# Ensuring cluster $(KIND_NAME)
-	-kind create cluster --name $(KIND_NAME) $(KIND_ARGS)
+	-KIND_EXPERIMENTAL_PROVIDER=podman kind create cluster --name $(KIND_NAME) $(KIND_ARGS)
 	kubectl config use-context $(KIND_CLUSTER_NAME)
 	kind get kubeconfig --name $(KIND_NAME) > kubeconfig_$(CLUSTER_NAME)_e2e
 

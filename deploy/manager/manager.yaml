@@ -36,6 +36,9 @@ spec:
             - containerPort: 9443
               protocol: TCP
               name: webhook-http
+            - containerPort: 8090
+              protocol: TCP
+              name: dryrun-http
           imagePullPolicy: Always
           volumeMounts:
           - mountPath: /tmp/k8s-webhook-server/serving-certs

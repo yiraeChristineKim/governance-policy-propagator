@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Fake
+metadata:
+  name: my-fake
+spec:
+  limits:
+    memory: 400

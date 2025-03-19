@@ -1,0 +1,6 @@
+- Group: ""
+  Kind: Fake
+  Plural: fakes
+  Scope: namespace
+  Singular: fake
+  Version: v1

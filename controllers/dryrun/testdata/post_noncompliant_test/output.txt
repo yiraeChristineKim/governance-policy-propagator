@@ -1,0 +1,15 @@
+# Diffs:
+v1 Fake default/my-fake:
+--- default/my-fake : existing
++++ default/my-fake : updated
+@@ -3,7 +3,7 @@
+ metadata:
+   name: my-fake
+   namespace: default
+ spec:
+   limits:
+-    memory: 400
++    memory: 500
+ 
+# Compliance messages:
+NonCompliant; violation - fakes [my-fake] found but not as specified in namespace default

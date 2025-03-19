@@ -1,0 +1,19 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: hello
+  namespace: default
+spec:
+  remediationAction: enforce
+  namespaceSelector:
+    include: ["default"]
+  object-templates:
+    - complianceType: musthave
+      objectDefinition:
+        apiVersion: v1
+        kind: Fake
+        metadata:
+          name: my-fake
+        spec:
+          limits:
+            memory: 500

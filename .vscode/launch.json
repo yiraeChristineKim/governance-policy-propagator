@@ -15,7 +15,8 @@
             ],
             "env": {
                 "WATCH_NAMESPACE": "",
-                "KUBECONFIG": "${workspaceFolder}/kubeconfig_hub",
+                "KUBECONFIG": "/Users/yiraekim/.kube/config",
+               // "KUBECONFIG": "${workspaceFolder}/kubeconfig_hub",
             }
         },
         // Set FDescribe or FIt on the test to debug. Then set the desired breakpoint.
@@ -33,5 +34,19 @@
                 "KUBECONFIG": "${workspaceFolder}/kubeconfig_hub_e2e"
             }
         },
+        {
+            "name": "Debug dryrun unit test",
+            "type": "go",
+            "request": "launch",
+            "mode": "test",
+            "program": "${workspaceFolder}/controllers/dryrun/handler_test.go",
+            "env": {},
+            "stopOnEntry": false,
+            "trace": "verbose",
+            "logOutput": "stderr",
+            "args": [
+                "-test.run", "TestCompliantPostHandler",
+            ]
+          }
     ]
 }

@@ -1,0 +1,29 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: hello
+  namespace: default
+spec:
+  remediationAction: inform
+  namespaceSelector:
+    include: ["default"]
+  object-templates:
+    - complianceType: musthave
+      objectDefinition:
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: pod-case-18
+          labels:
+            test: cat
+        spec:
+          containers:
+            - image: registry.redhat.io/rhel9/httpd-24:latest
+              name: httpd
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                privileged: false
+                runAsNonRoot: true

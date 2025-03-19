@@ -1,0 +1,9 @@
+compliant: Compliant
+relatedObjects:
+- compliant: Compliant
+  object:
+    apiVersion: v1
+    kind: Fake
+    metadata:
+      name: my-fake
+  reason: Resource found as expected

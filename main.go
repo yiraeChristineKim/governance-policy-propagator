@@ -509,6 +509,7 @@ func main() {
 	// Dryrun server
 	mux := http.NewServeMux()
 	mux.HandleFunc("/dryrun", dryrun.PostHandler)
+	mux.HandleFunc("/dryrun/health", dryrun.HealthHandler)
 
 	dryrunServer := &http.Server{
 		Addr:        ":8090",
